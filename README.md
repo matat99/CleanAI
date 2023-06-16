@@ -2,6 +2,8 @@
 
 Clean-AI is an open-source tool designed to streamline and automate the process of cleaning data for Natural Language Processing (NLP) and Machine Learning (ML).
 
+**The Project is in very early stages at the moment**
+
 ## Motivation
 
 The goal is to make AI training more accessible. It is important that everyone
