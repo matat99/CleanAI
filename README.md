@@ -29,14 +29,14 @@ to the best of my abilities whenever I have time. **I'm in no way a professional
  - [ ] Text Encoding 
  - [ ] Training and test sets division
  - [ ] Make the README nicer
- ...
+ - [ ] ...
 
  # To Do (long-term)
 
  - [ ] Add a GUI
  - [ ] Make sure appropriate cleaning steps are applied to a chosen NLP model
  - [ ] Multithreading
- ...
+ - [ ] ...
 
 ## License 
 
