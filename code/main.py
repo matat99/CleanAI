@@ -3,8 +3,10 @@
 import pypdf
 import nltk
 import string
+from nltk.corpus import stopwords 
 
 #This needs to be ran only once to download the 'Punkt' tokenizer
+#nltk.download('stopwords') # UNCOMMENT THIS WHEN YOU FIRST RUN THE SCRIPT
 #nltk.download('punkt') # UNCOMMENT THIS WHEN YOU FIRST RUN THE SCRIPT 
 
 
@@ -72,14 +74,29 @@ def remove_punctuation(tokens: list) -> list:
 
 	return cleaned_tokens
 
+
 def lowercase(no_punc: list) -> list:
 	lowercase = [token.lower() for token in no_punc]
 
 	return lowercase
 
 
+def no_stop_words(lower):
+	stop_words = set(stopwords.words('english'))
+
+	filtered_tokens = []
+	for word in lower:
+		if word not in stop_words:
+			filtered_tokens.append(word)
+
+	return filtered_tokens
+
+
+
 text_prep = TextPrepare(pdf)
 tokens = text_prep.prepare()
 no_punc = remove_punctuation(tokens)
 lower = lowercase(no_punc)
-print(lower)
+no_stop = no_stop_words(lower)
+print(len(lower))
+print(len(no_stop))

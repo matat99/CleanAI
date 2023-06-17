@@ -22,8 +22,8 @@ to the best of my abilities whenever I have time. **I'm in no way a professional
  - [x] make sure the text is stored appropriately for further cleaning. 
  - [x] Tokenazation of the text
  - [x] Removal of punctuation
- - [ ] Normalization of the text
- - [ ] Stop Word Removal
+ - [x] Normalization (lowercase) of the text
+ - [x] Stop Word Removal
  - [ ] Stemming/Lemmatization
  - [ ] Spell Check
  - [ ] Text Encoding 
@@ -34,7 +34,7 @@ to the best of my abilities whenever I have time. **I'm in no way a professional
  # To Do (long-term)
 
  - [ ] Add a GUI
- - [ ] Make sure appropriate cleaning steps are applied to a chosen NLP model
+ - [ ] Template a flow of cleaning steps for most common NLP models
  - [ ] Multithreading
  - [ ] ...
 
