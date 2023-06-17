@@ -11,42 +11,52 @@ import string
 
 pdf = "../example/fomcminutes20230201.pdf"
 
-def text_extract(pdf):
+class TextPrepare:
+	def __init__(self, pdf):
+		self.pdf = pdf 
 
-	"""
-	Extract ALL the text from a pdf file. 
-	This includes headers and footers as well as the body. 
+	def text_extract(self):
 
-	Usage: text_extract(file)
+		"""
+		Extract ALL the text from a pdf file. 
+		This includes headers and footers as well as the body. 
 
-	For now the path is hardcoded but this is only for testing purposes
-	"""
+		Usage: text_extract(file)
 
-	with open(pdf, "rb") as file:
-		# Create PDF reader object
-		reader = pypdf.PdfReader(file)
+		For now the path is hardcoded but this is only for testing purposes
+		"""
 
-		all_text = []
+		with open(pdf, "rb") as file:
+			# Create PDF reader object
+			reader = pypdf.PdfReader(file)
 
-		for page in reader.pages:
-			all_text.append(page.extract_text())
+			all_text = []
 
-		
-	text = " ".join(all_text)
+			for page in reader.pages:
+				all_text.append(page.extract_text())
 
-	return text
+			
+		return " ".join(all_text)
 
-def tokenize(text):
-	"""
-	This function tokenizes the text extracted from the pdf at the word level. Each word 
-	and punctuation will be tokenized. This step is usually done before removing of stop words,
-	stemming etc. for ease of processing
 
-	Usage: tokenize(string)
-	"""
-	return nltk.word_tokenize(text)
+	def tokenize(self, text):
+		"""
+		This function tokenizes the text extracted from the pdf at the word level. Each word 
+		and punctuation will be tokenized. This step is usually done before removing of stop words,
+		stemming etc. for ease of processing
 
-def remove_punctuation(tokens):
+		Usage: tokenize(string)
+		"""
+		return nltk.word_tokenize(text)
+
+	def prepare(self):
+		text = self.text_extract()
+		return self.tokenize(text)
+
+
+
+
+def remove_punctuation(tokens: list) -> list:
 	"""
 
 	"""
@@ -62,15 +72,14 @@ def remove_punctuation(tokens):
 
 	return cleaned_tokens
 
+def lowercase(no_punc: list) -> list:
+	lowercase = [token.lower() for token in no_punc]
 
-	
-
-text = text_extract(pdf)
-tokens = tokenize(text)
-clean = remove_punctuation(tokens)
-print(clean)
+	return lowercase
 
 
-# with open("test.txt", "w") as file:
-# 	file.write(text)
-
+text_prep = TextPrepare(pdf)
+tokens = text_prep.prepare()
+no_punc = remove_punctuation(tokens)
+lower = lowercase(no_punc)
+print(lower)
