@@ -205,7 +205,7 @@ def main(args):
 	for operation in args.operations:
 		tokens = operations[operation](tokens)
 
-	write_to_file(tokens, args.out)
+	write_to_file(tokens, args.output)
 
 
 if __name__ == "__main__":
