@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+# Importing Required Libraries
 import re
 import pypdf
 import nltk
@@ -8,7 +9,7 @@ from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
 from nltk.stem import WordNetLemmatizer
 
-
+# Checking if necessary NLTK corpora are available and if not, downloading them
 try:
 	nltk.data.find('corpora/stopwords')
 	nltk.data.find('tokenizers/punkt')
@@ -19,10 +20,16 @@ except LookupError:
 	nltk.download('punkt')
 	nltk.download('wordnet')
     
-
+# file to process
 pdf = "../example/fomcminutes20230201.pdf"
 
 class TextPrepare:
+	"""
+	Class that will do the basic text preparation for further cleaning. This class will extract 
+	the text from a pdf, conjoin any hyphenated words, and finally tokenize it. This standardizes the process
+	and makes sure each file has gone through basic cleaning.
+
+	"""
 	def __init__(self, pdf):
 		self.pdf = pdf 
 
@@ -92,12 +99,18 @@ def remove_punctuation(tokens: list) -> list:
 
 
 def lowercase(tokens: list) -> list:
+	"""
+	Converts all tokens into lowercase
+	"""
 	lowercase = [token.lower() for token in tokens]
 
 	return lowercase
 
 
 def no_stop_words(tokens):
+	"""
+	Removes stop words from tokens like 'and', 'the' etc.
+	"""
 	stop_words = set(stopwords.words('english'))
 
 	filtered_tokens = []
@@ -108,6 +121,9 @@ def no_stop_words(tokens):
 	return filtered_tokens
 
 def stem(tokens):
+	"""
+	Stems tokens 
+	"""
 	stemmer = PorterStemmer()
 
 	stemmed_tokens = []
@@ -118,6 +134,9 @@ def stem(tokens):
 	return stemmed_tokens
 
 def lemmatize(tokens):
+	"""
+	lemmatizes tokens
+	"""
 	lemmatizer = WordNetLemmatizer()
 
 	lemmatized_tokens = []
@@ -128,7 +147,8 @@ def lemmatize(tokens):
 	return lemmatized_tokens
 
 
-
+# this is where I make sure all the code runs as intended and play around with the flow 
+# of all the functions. This will not be in the final version of the code.
 
 text_prep = TextPrepare(pdf)
 tokens = text_prep.prepare()
