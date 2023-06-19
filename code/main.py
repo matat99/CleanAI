@@ -12,16 +12,14 @@ from nltk.stem import WordNetLemmatizer
 
 
 # Checking if necessary NLTK corpora are available and if not, downloading them
-try:
-	nltk.data.find('corpora/stopwords')
-	nltk.data.find('tokenizers/punkt')
-	nltk.data.find('corpora/wordnet')
-except LookupError:
-	print("Downloading required NLTK data...")
-	nltk.download('stopwords')
-	nltk.download('punkt')
-	nltk.download('wordnet')
-    
+corpora = ['stopwords', 'punkt', 'wordnet']
+for corpus in corpora:
+    try:
+        nltk.data.find(f'corpora/{corpus}')
+    except LookupError:
+        # Comment out or remove the print statement below to suppress download messages.
+        # print(f"Downloading required NLTK data: {corpus}...")
+        nltk.download(corpus, quiet=True) # Added quiet=True to suppress download status messages.
 
 class TextPrepare:
 	"""
@@ -172,22 +170,28 @@ def main(args):
 	}
 
 	for operation in args.operations:
-		if operation in operations:
-			tokens = operations[operation](tokens)
-		else:
+		if operation not in operations:
 			print(f"WARNING: '{operation}' is not a valid opperation.")
+			return
+
+	for operation in args.operations:
+		tokens = operations[operation](tokens)
 
 	write_to_file(tokens, args.out)
 
 
 if __name__ == "__main__":
-	parser = argparse.ArgumentParser(description='Process and clean PDF text')
+	parser = argparse.ArgumentParser(description='Process and clean PDF text',  usage='%(prog)s -f <pdf_path> -o [operations] -out <output_file>\nExample: %(prog)s -f /path/to/your/pdf -o rm l ns -out output.txt')
 	parser.add_argument('-f', type=str, help='Path to the PDF file to process.')
 	parser.add_argument('-o', '--operations', type=str, nargs='+', help='List of operations to apply to the text in the order provided. Options: remove_punc, lowercase, no_stop_words, lemmatize, stem.')
 	parser.add_argument('-out', '-output', type=str, default='output.txt', help='provide a name for the file you want the tokens to be outputted to.')
 
 	args = parser.parse_args()
-	main(args)
+	
+	if not args.f or not args.operations:
+		parser.print_usage()
+	else:
+		main(args)
 
 
 
