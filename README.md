@@ -42,7 +42,7 @@ For now this is only a personal project but I will continue to make improvements
 
 Now, CleanAI should be ready to use!
 
-##### If you prefer to keep your workspace clean, consider using a virtual environment.
+#### If you prefer to keep your workspace clean, consider using a virtual environment.
 
 ### Virtual Environment (Optional)
 
