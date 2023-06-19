@@ -69,13 +69,16 @@ If you want to keep CleanAI and its dependencies separate from your other Python
  - [ ] Training and test sets division
  - [ ] Make the README nicer
  - [ ] Add different flags for each cleaning function for a better CLI experience and terminal interactivity
+ - [ ] Add unit tests
+ - [ ] comprehensive error handling
  - [ ] ...
 
  # To Do (long-term)
 
- - [ ] Add a GUI
+ - [ ] Add a GUI or a Web Interface
  - [ ] Template a flow of cleaning steps for most common NLP models
  - [ ] Multithreading
+ - [ ] Implement Docker
  - [ ] ...
 
 ## License 
