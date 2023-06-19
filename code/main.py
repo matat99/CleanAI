@@ -1,21 +1,26 @@
 #!/usr/bin/env python3
 
+import re
 import pypdf
 import nltk
 import string
 from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer
+from nltk.stem import WordNetLemmatizer
 
 
 try:
 	nltk.data.find('corpora/stopwords')
 	nltk.data.find('tokenizers/punkt')
+	nltk.data.find('corpora/wordnet')
 except LookupError:
 	print("Downloading required NLTK data...")
 	nltk.download('stopwords')
 	nltk.download('punkt')
+	nltk.download('wordnet')
     
 
-pdf = "./example/fomcminutes20230201.pdf"
+pdf = "../example/fomcminutes20230201.pdf"
 
 class TextPrepare:
 	def __init__(self, pdf):
@@ -44,6 +49,14 @@ class TextPrepare:
 			
 		return " ".join(all_text)
 
+	def join_hyphens(self, text):
+		"""
+		Join words that have been split with a hyphen (for example where a word that's too long has been 
+		split to a new line witha hyphen) 
+		"""
+		return re.sub(r'(\w+)-\s*(\w+)', r'\1\2', text)
+
+
 
 	def tokenize(self, text):
 		"""
@@ -57,43 +70,63 @@ class TextPrepare:
 
 	def prepare(self):
 		text = self.text_extract()
-		return self.tokenize(text)
+		text_no_hyphen = self.join_hyphens(text)
+		return self.tokenize(text_no_hyphen)
 
 
 
 
 def remove_punctuation(tokens: list) -> list:
 	"""
-
+	Remove punctuation, lone double quotes, bullet points, and backticks
 	"""
 	cleaned_tokens = []
 
 	for token in tokens:
 
-		if token not in string.punctuation:
+		if token.isalnum():
 
-			if not all(char in ['_', '-', '.'] for char in token):
-
-				cleaned_tokens.append(token)
+			cleaned_tokens.append(token)
 
 	return cleaned_tokens
 
 
-def lowercase(no_punc: list) -> list:
-	lowercase = [token.lower() for token in no_punc]
+def lowercase(tokens: list) -> list:
+	lowercase = [token.lower() for token in tokens]
 
 	return lowercase
 
 
-def no_stop_words(lower):
+def no_stop_words(tokens):
 	stop_words = set(stopwords.words('english'))
 
 	filtered_tokens = []
-	for word in lower:
+	for word in tokens:
 		if word not in stop_words:
 			filtered_tokens.append(word)
 
 	return filtered_tokens
+
+def stem(tokens):
+	stemmer = PorterStemmer()
+
+	stemmed_tokens = []
+
+	for token in tokens:
+		stemmed_tokens.append(stemmer.stem(token))
+
+	return stemmed_tokens
+
+def lemmatize(tokens):
+	lemmatizer = WordNetLemmatizer()
+
+	lemmatized_tokens = []
+
+	for token in tokens:
+		lemmatized_tokens.append(lemmatizer.lemmatize(token))
+
+	return lemmatized_tokens
+
 
 
 
@@ -102,5 +135,7 @@ tokens = text_prep.prepare()
 no_punc = remove_punctuation(tokens)
 lower = lowercase(no_punc)
 no_stop = no_stop_words(lower)
-print(len(lower))
-print(len(no_stop))
+#stemmed = stem(no_stop)
+lemmat = lemmatize(no_stop)
+
+print(lemmat)

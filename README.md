@@ -24,7 +24,8 @@ to the best of my abilities whenever I have time. **I'm in no way a professional
  - [x] Removal of punctuation
  - [x] Normalization (lowercase) of the text
  - [x] Stop Word Removal
- - [ ] Stemming/Lemmatization
+ - [x] Join Hyphens
+ - [x] Stemming/Lemmatization
  - [ ] Spell Check
  - [ ] Text Encoding 
  - [ ] Training and test sets division
