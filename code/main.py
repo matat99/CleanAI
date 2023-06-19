@@ -51,7 +51,7 @@ class TextPrepare:
 
 	def join_hyphens(self, text):
 		
-		return re.sub(r'(\w+)-\s*(\w+)', r'\1\2', text)
+		return re.sub(r'(\w+)\s*-\s*(\w+)', r'\1\2', text)
 
 
 
@@ -169,7 +169,7 @@ def write_to_file(tokens, output_file):
     output_file (str): The name of the file to write the tokens to.
     """
 	with open(output_file, 'w') as f:
-		f.write(','.join(tokens))
+		f.write(str(tokens))
 
 def main(args):
 	"""
@@ -185,7 +185,7 @@ def main(args):
 
 	operations = {
 		'remove_punc': remove_punctuation,
-		'rm': remove_punctuation,
+		'rp': remove_punctuation,
 		'no_stop_words': no_stop_words,
 		'remove_stop': no_stop_words,
 		'rs': no_stop_words,
@@ -213,7 +213,7 @@ if __name__ == "__main__":
                                      usage='%(prog)s -f <pdf_path> -o [operations] -out <output_file>\nExample: %(prog)s -f /path/to/your/pdf -o rm l ns -out output.txt')
     parser.add_argument('-f', type=str, required=True, help='PDF file path.')
     parser.add_argument('-o', '--operations', type=str, nargs='+', required=True, 
-                        help='Operations: rm (remove punctuation), l (lowercase), rs (remove stop words), lemm (lemmatize), stem (apply stemming). Apply in the order provided.')
+                        help='Operations: rp (remove punctuation), l (lowercase), rs (remove stop words), lemm (lemmatize), stem (apply stemming). Apply in the order provided.')
     parser.add_argument('-out', '--output', type=str, default='output.txt', help='Output file name.')
 
     args = parser.parse_args()
