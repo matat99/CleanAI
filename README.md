@@ -4,7 +4,7 @@ CleanAI is a Python-based, open-source tool that simplifies and automates the da
 
 **The Project is in very early stages at the moment**
 
-****
+
 ## Motivation
 
 The goal is to make AI training more accessible. It is important that everyone
@@ -13,7 +13,6 @@ who is interested in the topic gets to utilise it to its full potential. Especia
 For now this is only a personal project but I will continue to make improvments to the code
 to the best of my abilities whenever I have time. **I'm in no way a professional when it comes to coding or machine learning!** (which is one of the reasons I decided to pick up this project) So if you have any recomendations for cleaner code or better optimisation please feel free to fork this repository and I'll try to review any pull request.
 
-****
 # Installation 
 
 ### Prerequisites
