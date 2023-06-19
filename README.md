@@ -4,83 +4,119 @@ CleanAI is a Python-based, open-source tool that simplifies and automates the da
 
 **The Project is in very early stages at the moment**
 
+- [Motivation](#motivation)
+- [Installation](#installation)
+  - [Prerequisites](#prerequisites)
+  - [Steps](#steps)
+  - [Virtual Environment (Optional)](#virtual-environment-optional)
+- [Usage](#usage)
+- [To Do (short-term)](#to-do-short-term)
+- [To Do (long-term)](#to-do-long-term)
+- [License](#license)
 
-## Motivation
 
-The goal is to make AI training more accessible. It is important that everyone
-who is interested in the topic gets to utilise it to its full potential. Especially in a time where interest in AI technologies and capabilities is at an all time high. This tool can also be used by professionals who want to simplify and streamline the process of data cleaning for their models.
+### Motivation
 
-For now this is only a personal project but I will continue to make improvments to the code
-to the best of my abilities whenever I have time. **I'm in no way a professional when it comes to coding or machine learning!** (which is one of the reasons I decided to pick up this project) So if you have any recomendations for cleaner code or better optimisation please feel free to fork this repository and I'll try to review any pull request.
+The goal is to make AI training more accessible. It is important that everyone who is interested in the topic gets to utilise it to its full potential. Especially in a time where interest in AI technologies and capabilities is at an all time high. This tool can also be used by professionals who want to simplify and streamline the process of data cleaning for their models.
 
-# Installation 
+For now this is only a personal project but I will continue to make improvements to the code to the best of my abilities whenever I have time. I'm in no way a professional when it comes to coding or machine learning! (which is one of the reasons I decided to pick up this project) So if you have any recommendations for cleaner code or better optimisation, please feel free to fork this repository and I'll try to review any pull request.
+## Installation
+#### Prerequisites
 
-### Prerequisites
+- **Python 3**: CleanAI requires Python 3.6 or newer. You can check your Python version by running `python --version` in your terminal/command prompt. If you don't have Python installed or have an older version, you can download the latest version from the official Python website.
+- **pip**: The Python package installer pip is usually installed with Python. You can check its availability by running `pip --version` in your terminal/command prompt. If pip is not installed, follow the instructions on pip's installation page.
 
-- Python 3: CleanAI requires Python 3.6 or newer. You can check your Python version by running `python --version` in your terminal/command prompt. If you don't have Python installed or have an older version, you can download the latest version from the official Python website.
-- pip: The Python package installer pip is usually installed with Python. You can check its availability by running `pip --version` in your terminal/command prompt. If pip is not installed, follow the instructions on pip's installation page.
+#### Steps
 
-### Steps
-1. Clone the repository: 
-     - Open your terminal/command prompt and navigate to the directory where you want to store the project. Then, clone the repository with the following command:
-    **`git clone https://github.com/matat99/CleanAI`**
+1. Clone the repository:
+        Open your terminal/command prompt and navigate to the directory where you want to store the project. Then, clone the repository with the following command:
+        `git clone https://github.com/matat99/CleanAI`
 2. Navigate to the cloned directory:
-     - Change your current directory to the CleanAI directory:
-      **`cd CleanAI`**
+        Change your current directory to the CleanAI directory:
+        `cd CleanAI`
 3. Install necessary packages:
-    - CleanAI requires several Python libraries. These libraries are listed in the `requirements.txt` file. You can install them all at once using `pip`:
-    **`pip3 install -r requirements.txt`**
-     - if you encounter permission errors, try using the `--user` flag:
-    **`pip3 install --user -r requirements.txt.txt`**
-
-If you prefer to keep your workspace clean, consider using a virtual environment.
+        CleanAI requires several Python libraries. These libraries are listed in the requirements.txt file. You can install them all at once using pip:
+        `pip3 install -r requirements.txt`
+        if you encounter permission errors, try using the --user flag:
+        `pip3 install --user -r requirements.txt.txt`
 
 Now, CleanAI should be ready to use!
 
+##### If you prefer to keep your workspace clean, consider using a virtual environment.
+
 ### Virtual Environment (Optional)
+
 If you want to keep CleanAI and its dependencies separate from your other Python projects, you can create a virtual environment. Here's how to do it:
-1. Install the `virtualenv` package:
-    **`pip3 install virtualenv`**
+
+1. Install the virtualenv package:
+    `pip3 install virtualenv`
 2. Create a virtual environment in your project directory:
-    **`cd CleanAI`
-    `virtualenv venv`**
+    `cd CleanAI`
+    `virtualenv venv`
 3. Activate your environment:
     - On Unix:
-    `source venv/bin/activate`
-    - On Windows:
-    `.\venv\Scripts\activate`
+        `source venv/bin/activate`
+    -On Windows:
+        `.\venv\Scripts\activate`
 4. Now you can install the requirements as before:
-    **`pip3 install -r requirements.txt`**
+    `pip3 install -r requirements.txt`
 
-**To exit the virtual environment when you're done, just type deactivate in your terminal/command prompt.**
-***
+To exit the virtual environment when you're done, just type `deactivate` in your terminal/command prompt.
+## Usage
 
-# To Do (short-term)
+#### Basic usage: 
+After completing the installation steps, you can run CleanAI from your terminal/command prompt with the following syntax:
 
- - [x] make sure the text is stored appropriately for further cleaning. 
- - [x] Tokenazation of the text
- - [x] Removal of punctuation
- - [x] Normalization (lowercase) of the text
- - [x] Stop Word Removal
- - [x] Join Hyphens
- - [x] Stemming/Lemmatization
- - [ ] Spell Check
- - [ ] Text Encoding 
- - [ ] Training and test sets division
- - [ ] Make the README nicer
- - [x] CLI flags
- - [ ] Add unit tests
- - [ ] comprehensive error handling
- - [ ] ...
+`python main.py -f <pdf_path> -o <operations> -out <output_file>`
 
- # To Do (long-term)
+<pdf_path> should be replaced with the path to the PDF file you want to process.
+<operations> should be replaced with the operations you want to apply to the text. You can list multiple operations in the order they should be applied.
+<output_file> should be replaced with the name of the file you want to output the results to. If not provided, 'output.txt' will be used by default.
 
- - [ ] Add a GUI or a Web Interface
- - [ ] Template a flow of cleaning steps for most common NLP models
- - [ ] Multithreading
- - [ ] Implement Docker
- - [ ] ...
+#### Operations: 
+You can choose from the following operations:
 
-## License 
+    rm: Remove punctuation.
+    l: Convert text to lowercase.
+    ns: Remove stop words.
+    lemm: Lemmatize text.
+    stem: Apply stemming.
+
+**Operations should be provided in the order you want them to be applied, separated by spaces. For example, to remove punctuation, convert to lowercase, and then remove stop words, you would use: -o rm l ns.**
+
+#### Example usage: 
+The following command will process the file 'sample.pdf', remove punctuation, convert to lowercase, remove stop words, and output the result to 'output.txt':
+
+`python main.py -f sample.pdf -o rm l ns -out output.txt`
+
+For further details, you can always use the --help option to display information about how to use CleanAI.
+
+## To Do (short-term)
+
+- [x] Make sure the text is stored appropriately for further cleaning.
+- [x] Tokenization of the text.
+- [x]Removal of punctuation.
+- [x] Normalization (lowercase) of the text.
+- [x] Stop Word Removal.
+- [x] Join Hyphens.
+- [x] Stemming/Lemmatization.
+- [ ] Spell Check.
+- [ ] Text Encoding.
+- [ ] Training and test sets division.
+- [x] Make the README nicer.
+- [x] CLI flags.
+- [ ] Add unit tests.
+- [ ] Comprehensive error handling.
+- [ ] ...
+
+## To Do (long-term)
+
+- [ ] Add a GUI or a Web Interface.
+- [ ] Template a flow of cleaning steps for most common NLP models.
+- [ ] Multithreading.
+- [ ] Implement Docker.
+- [ ] ...
+
+## License
 
 Distributed under the MIT License. See 'LICENSE' for more information.
