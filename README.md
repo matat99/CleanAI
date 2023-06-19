@@ -95,7 +95,7 @@ For further details, you can always use the --help option to display information
 
 - [x] Make sure the text is stored appropriately for further cleaning.
 - [x] Tokenization of the text.
-- [x]Removal of punctuation.
+- [x] Removal of punctuation.
 - [x] Normalization (lowercase) of the text.
 - [x] Stop Word Removal.
 - [x] Join Hyphens.
