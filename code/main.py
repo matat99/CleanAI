@@ -3,15 +3,19 @@
 import pypdf
 import nltk
 import string
-from nltk.corpus import stopwords 
-
-#This needs to be ran only once to download the 'Punkt' tokenizer
-#nltk.download('stopwords') # UNCOMMENT THIS WHEN YOU FIRST RUN THE SCRIPT
-#nltk.download('punkt') # UNCOMMENT THIS WHEN YOU FIRST RUN THE SCRIPT 
+from nltk.corpus import stopwords
 
 
+try:
+	nltk.data.find('corpora/stopwords')
+	nltk.data.find('tokenizers/punkt')
+except LookupError:
+	print("Downloading required NLTK data...")
+	nltk.download('stopwords')
+	nltk.download('punkt')
+    
 
-pdf = "../example/fomcminutes20230201.pdf"
+pdf = "./example/fomcminutes20230201.pdf"
 
 class TextPrepare:
 	def __init__(self, pdf):
