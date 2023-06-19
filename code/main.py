@@ -5,9 +5,11 @@ import re
 import pypdf
 import nltk
 import string
+import argparse
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
 from nltk.stem import WordNetLemmatizer
+
 
 # Checking if necessary NLTK corpora are available and if not, downloading them
 try:
@@ -20,8 +22,6 @@ except LookupError:
 	nltk.download('punkt')
 	nltk.download('wordnet')
     
-# file to process
-pdf = "../example/fomcminutes20230201.pdf"
 
 class TextPrepare:
 	"""
@@ -44,7 +44,7 @@ class TextPrepare:
 		For now the path is hardcoded but this is only for testing purposes
 		"""
 
-		with open(pdf, "rb") as file:
+		with open(self.pdf, "rb") as file:
 			# Create PDF reader object
 			reader = pypdf.PdfReader(file)
 
@@ -146,16 +146,62 @@ def lemmatize(tokens):
 
 	return lemmatized_tokens
 
+def write_to_file(tokens, output_file):
+	with open(output_file, 'w') as f:
+		f.write(','.join(tokens))
+
+def main(args):
+	# Instance of TextPrepare 
+	text_prep = TextPrepare(args.f)
+
+	tokens = text_prep.prepare()
+
+
+	operations = {
+		'remove_punc': remove_punctuation,
+		'rm': remove_punctuation,
+		'no_stop_words': no_stop_words,
+		'no_stop': no_stop_words,
+		'ns': no_stop_words,
+		'lemmatize': lemmatize,
+		'lemm': lemmatize,
+		'stem': stem,
+		'lowercase': lowercase,
+		'l': lowercase,
+
+	}
+
+	for operation in args.operations:
+		if operation in operations:
+			tokens = operations[operation](tokens)
+		else:
+			print(f"WARNING: '{operation}' is not a valid opperation.")
+
+	write_to_file(tokens, args.out)
+
+
+if __name__ == "__main__":
+	parser = argparse.ArgumentParser(description='Process and clean PDF text')
+	parser.add_argument('-f', type=str, help='Path to the PDF file to process.')
+	parser.add_argument('-o', '--operations', type=str, nargs='+', help='List of operations to apply to the text in the order provided. Options: remove_punc, lowercase, no_stop_words, lemmatize, stem.')
+	parser.add_argument('-out', '-output', type=str, default='output.txt', help='provide a name for the file you want the tokens to be outputted to.')
+
+	args = parser.parse_args()
+	main(args)
+
+
+
+
 
 # this is where I make sure all the code runs as intended and play around with the flow 
 # of all the functions. This will not be in the final version of the code.
 
-text_prep = TextPrepare(pdf)
-tokens = text_prep.prepare()
-no_punc = remove_punctuation(tokens)
-lower = lowercase(no_punc)
-no_stop = no_stop_words(lower)
-#stemmed = stem(no_stop)
-lemmat = lemmatize(no_stop)
+# text_prep = TextPrepare(pdf)
+# tokens = text_prep.prepare()
+# no_punc = remove_punctuation(tokens)
+# lower = lowercase(no_punc)
+# no_stop = no_stop_words(lower)
+# #stemmed = stem(no_stop)
+# lemmat = lemmatize(no_stop)
 
-print(lemmat)
+# print(lemmat)

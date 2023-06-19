@@ -68,7 +68,7 @@ If you want to keep CleanAI and its dependencies separate from your other Python
  - [ ] Text Encoding 
  - [ ] Training and test sets division
  - [ ] Make the README nicer
- - [ ] Add different flags for each cleaning function for a better CLI experience and terminal interactivity
+ - [x] CLI flags
  - [ ] Add unit tests
  - [ ] comprehensive error handling
  - [ ] ...
