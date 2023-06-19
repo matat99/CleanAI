@@ -22,16 +22,16 @@ to the best of my abilities whenever I have time. **I'm in no way a professional
 
 ### Steps
 1. Clone the repository: 
-    Open your terminal/command prompt and navigate to the directory where you want to store the project. Then, clone the repository with the following command:
-    `git clone https://github.com/matat99/CleanAI`
+     - Open your terminal/command prompt and navigate to the directory where you want to store the project. Then, clone the repository with the following command:
+    **`git clone https://github.com/matat99/CleanAI`**
 2. Navigate to the cloned directory:
-    Change your current directory to the CleanAI directory:
-    `cd CleanAI`
+     - Change your current directory to the CleanAI directory:
+      **`cd CleanAI`**
 3. Install necessary packages:
-    CleanAI requires several Python libraries. These libraries are listed in the `requirements.txt` file. You can install them all at once using `pip`:
-    `pip3 install -r requirements.txt`
-    if you encounter permission errors, try using the `--user` flag:
-    `pip3 install --user -r requirements.txt.txt`
+    - CleanAI requires several Python libraries. These libraries are listed in the `requirements.txt` file. You can install them all at once using `pip`:
+    **`pip3 install -r requirements.txt`**
+     - if you encounter permission errors, try using the `--user` flag:
+    **`pip3 install --user -r requirements.txt.txt`**
 
 If you prefer to keep your workspace clean, consider using a virtual environment.
 
@@ -40,17 +40,17 @@ Now, CleanAI should be ready to use!
 ### Virtual Environment (Optional)
 If you want to keep CleanAI and its dependencies separate from your other Python projects, you can create a virtual environment. Here's how to do it:
 1. Install the `virtualenv` package:
-    `pip3 install virtualenv`
+    **`pip3 install virtualenv`**
 2. Create a virtual environment in your project directory:
-   `cd CleanAI`
-    `virtualenv venv`
+    **`cd CleanAI`
+    `virtualenv venv`**
 3. Activate your environment:
     - On Unix:
     `source venv/bin/activate`
     - On Windows:
     `.\venv\Scripts\activate`
 4. Now you can install the requirements as before:
-    `pip3 install -r requirements.txt`
+    **`pip3 install -r requirements.txt`**
 
 **To exit the virtual environment when you're done, just type deactivate in your terminal/command prompt.**
 ***
