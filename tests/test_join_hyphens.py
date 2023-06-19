@@ -20,6 +20,13 @@ class TestTextPrepare(unittest.TestCase):
         # Ensure the function behaves as expected
         self.assertEqual(self.tp.join_hyphens(text), expected_result)
 
+         # Test case for hyphen at the end of the line
+        text = "This is a hyphen-\n ated word."
+        expected_result = "This is a hyphenated word."
+
+        # Ensure the function behaves as expected
+        self.assertEqual(self.tp.join_hyphens(text), expected_result)
+
         # Test case with no hyphen
         text = "This is a word with no hyphen."
         expected_result = "This is a word with no hyphen."
@@ -29,6 +36,20 @@ class TestTextPrepare(unittest.TestCase):
 
         # Test case with hyphen at the end
         text = "This is a hyphen -ated word"
+        expected_result = "This is a hyphenated word"
+
+        # Ensure the function behaves as expected
+        self.assertEqual(self.tp.join_hyphens(text), expected_result)
+
+        # Test case with hyphen seppareted by spaces
+        text = "This is a hyphen -\nated word"
+        expected_result = "This is a hyphenated word"
+
+        # Ensure the function behaves as expected
+        self.assertEqual(self.tp.join_hyphens(text), expected_result)
+
+        # Test case with hyphen seppareted by spaces
+        text = "This is a hyphen - \nated word"
         expected_result = "This is a hyphenated word"
 
         # Ensure the function behaves as expected

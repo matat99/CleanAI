@@ -50,9 +50,14 @@ class TextPrepare:
 		return " ".join(all_text)
 
 	def join_hyphens(self, text):
-		
-		return re.sub(r'(\w+)\s*-\s*(\w+)', r'\1\2', text)
+        
+		pattern = r"(\w)\s*-\s*(\w)"
 
+		def replace(match):
+
+			return match.group(1) + match.group(2)
+
+		return re.sub(pattern, replace, text)
 
 
 	def tokenize(self, text):
