@@ -61,5 +61,21 @@ class TestTextPrepare(unittest.TestCase):
 
         # Ensure the function behaves as expected
         self.assertEqual(self.tp.join_hyphens(text), expected_result)
+
+        # Test case for hyphen followed by newline, space and a word
+        text = "This is a hyphen-\n ated word."
+        expected_result = "This is a hyphenated word."
+
+        # Ensure the function behaves as expected
+        self.assertEqual(self.tp.join_hyphens(text), expected_result)
+
+        # Test case for hyphen between digits
+        text = "The score was 4-3."
+        expected_result = "The score was 4-3."
+
+
+        # Ensure the function behaves as expected
+        self.assertEqual(self.tp.join_hyphens(text), expected_result)
+
 if __name__ == '__main__':
     unittest.main()

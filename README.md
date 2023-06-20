@@ -100,7 +100,7 @@ For further details, you can always use the --help option to display information
 - [x] Stop Word Removal.
 - [x] Join Hyphens.
 - [x] Stemming/Lemmatization.
-- [ ] Ability to select which pdf pages you want to use
+- [x] Ability to select which pdf pages you want to use
 - [ ] Spell Check.
 - [ ] Text Encoding.
 - [ ] Training and test sets division.
