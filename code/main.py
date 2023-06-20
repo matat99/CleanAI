@@ -132,6 +132,7 @@ def no_stop_words(tokens: list) -> list:
 	stop_words = set(stopwords.words('english'))
 
 	filtered_tokens = []
+
 	for word in tokens:
 		if word not in stop_words:
 			filtered_tokens.append(word)
@@ -188,26 +189,26 @@ def write_to_file(tokens, output_file):
 		f.write(str(tokens))
 
 def process_pages(pages):
-		"""
-		Process a list of page ranges into a list of page numbers.
+	"""
+	Process a list of page ranges into a list of page numbers.
 
-		Parameters:
-		pages (list): List of strings representing page ranges (e.g. ["1", "3-5"]).
+	Parameters:
+	pages (list): List of strings representing page ranges (e.g. ["1", "3-5"]).
 
-		Returns:
-		list: List of page numbers to process (e.g. [1, 3, 4, 5]).
-		"""
-		page_numbers = []
+	Returns:
+	list: List of page numbers to process (e.g. [1, 3, 4, 5]).
+	"""
+	page_numbers = []
 
-		pages = [str(page) for page in pages] # for some reason argparse was passing pages as integers which it is not even supposed to do tf?
+	pages = [str(page) for page in pages] # for some reason argparse was passing pages as integers which it is not even supposed to do tf?
 		
-		for page_range in pages:
-			if "-" in page_range:
-				start, end = [int(i) for i in page_range.split("-")]
-				page_numbers.extend(list(range(start, end+1)))
-			else:
-				page_numbers.append(int(page_range))
-		return page_numbers
+	for page_range in pages:
+		if "-" in page_range:
+			start, end = [int(i) for i in page_range.split("-")]
+			page_numbers.extend(list(range(start, end+1)))
+		else:
+			page_numbers.append(int(page_range))
+	return page_numbers
 
 def main(args):
 	"""
@@ -239,17 +240,11 @@ def main(args):
 
 	for operation in args.operations:
 		if operation not in operations:
-			print(f"WARNING: '{operation}' is not a valid opperation.")
-			return
+			raise ValueError(f"Invalid operation: {operation}")
+	tokens = operations[operation](tokens)
 
-	for operation in args.operations:
-		tokens = operations[operation](tokens)
 
 	write_to_file(tokens, args.output)
-
-
-
-
 
 
 if __name__ == "__main__":
