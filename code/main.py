@@ -32,8 +32,9 @@ class TextPrepare:
 	tokenize(text): Tokenizes the given text at the word level.
 	prepare(): Extracts text from a pdf, conjoins any hyphenated words and tokenizes it.
 	"""
-	def __init__(self, pdf, pages=None):
+	def __init__(self, pdf, pages=None, level='word'):
 		self.pdf = pdf 
+		self.level = level
 
 		if pages:
 			self.pages = process_pages(pages)  
@@ -55,10 +56,15 @@ class TextPrepare:
 
 			for i in pages_to_extract:
 				page_text = reader.pages[i].extract_text()
+				page_text = page_text.replace("\n", " ")
 				all_text.append(page_text)
 
-			
-		return " ".join(all_text)
+			text = ' '.join(all_text)
+
+			text = re.sub(r"[-_]{3,}", " ", text)
+
+
+		return text
 
 	def join_hyphens(self, text):
 		
@@ -73,7 +79,10 @@ class TextPrepare:
 
 	def tokenize(self, text):
 		
-		return nltk.word_tokenize(text)
+		if self.level == 'sentence':
+			return nltk.sent_tokenize(text)
+		else:
+			return nltk.word_tokenize(text)
 
 	def prepare(self):
 		text = self.text_extract()
@@ -95,11 +104,15 @@ def remove_punctuation(tokens: list) -> list:
 	"""
 	cleaned_tokens = []
 
+	punctuation = string.punctuation + '_' + '-'
+
 	for token in tokens:
 
-		if token.isalnum():
+		clean_token = ''.join(char for char in token if char not in punctuation)
 
-			cleaned_tokens.append(token)
+		if clean_token: 
+
+			cleaned_tokens.append(clean_token)
 
 	return cleaned_tokens
 
@@ -219,7 +232,7 @@ def main(args):
 	"""
 	pages = process_pages(args.pages) if args.pages else None
 
-	text_prep = TextPrepare(args.f, pages)
+	text_prep = TextPrepare(args.f, pages, args.level)
 
 	tokens = text_prep.prepare()
 
@@ -256,6 +269,7 @@ if __name__ == "__main__":
 						help='Operations: rp (remove punctuation), l (lowercase), rs (remove stop words), lemm (lemmatize), stem (apply stemming). Apply in the order provided.')
 	parser.add_argument('-out', '--output', type=str, default='output.txt', help='Output file name.')
 	parser.add_argument('-p', '--pages', type=str, nargs='+', help='Pages to extract. Can be single numbers or ranges (e.g. 0-3). If omitted, all pages will be processed.)')
+	parser.add_argument('-l', '--level', type=str, default='word', help='Level of tokenization: "word" or "sentence". If omitted, word level tokenization will be applied.')
 
 
 	args = parser.parse_args()
