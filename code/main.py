@@ -23,16 +23,19 @@ for corpus in corpora:
 
 class TextPrepare:
 	"""
-	Class for preparing text for further processing. It extracts text from a given pdf file, conjoins any hyphenated words and tokenizes it.
+	Class for preparing text for further processing. It extracts text from a given pdf file, conjoins any hyphenated words, expands contractions, and tokenizes it.
 	
 	Parameters:
 	pdf (str): The path of the PDF file to process.
+	pages (list, optional): List of pages or page ranges to process. For example, ["1", "3-5"] will process pages 1, 3, 4, and 5. If omitted, all pages in the PDF will be processed.
+	level (str, optional): Level of tokenization. Can be "word" or "sentence". If omitted, word level tokenization will be applied.
 
 	Methods:
 	text_extract(): Extracts all the text from a pdf file. 
+	expand_contractions(text): Expands contractions in a given text.
 	join_hyphens(text): Joins words that have been split with a hyphen.
 	tokenize(text): Tokenizes the given text at the word level.
-	prepare(): Extracts text from a pdf, conjoins any hyphenated words and tokenizes it.
+	prepare(): Extracts text from a pdf, conjoins any hyphenated words, expands contractions, and tokenizes it.
 	"""
 	def __init__(self, pdf, pages=None, level='word'):
 		self.pdf = pdf 
@@ -301,7 +304,7 @@ if __name__ == "__main__":
 						help='Operations: rp (remove punctuation), l (lowercase), rs (remove stop words), lemm (lemmatize), stem (apply stemming). Apply in the order provided.')
 	parser.add_argument('-out', '--output', type=str, default='output.txt', help='Output file name.')
 	parser.add_argument('-p', '--pages', type=str, nargs='+', help='Pages to extract. Can be single numbers or ranges (e.g. 0-3). If omitted, all pages will be processed.)')
-	parser.add_argument('-l', '--level', type=str, default='word', help='Level of tokenization: "word" or "sentence". If omitted, word level tokenization will be applied.')
+	parser.add_argument('-l', '--level', type=str, default='word', choices=['word', 'sentence'], help='Level of tokenization: "word" or "sentence". If omitted, word level tokenization will be applied.')
 
 
 	args = parser.parse_args()

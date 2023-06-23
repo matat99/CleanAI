@@ -67,11 +67,12 @@ To exit the virtual environment when you're done, just type `deactivate` in your
 #### Basic usage: 
 After completing the installation steps, you can run CleanAI from your terminal/command prompt with the following syntax:
 
-`python main.py -f <pdf_path> -o <operations> -out <output_file>`
+`python main.py -f <pdf_path> -o <operations> -l <level of tokenization>-out <output_file>`
 
 <pdf_path> should be replaced with the path to the PDF file you want to process.
 <operations> should be replaced with the operations you want to apply to the text. You can list multiple operations in the order they should be applied.
 <output_file> should be replaced with the name of the file you want to output the results to. If not provided, 'output.txt' will be used by default.
+<level of tokenization> you can choose between two values: `word` and `sentence` to set a level of tokenization for your text. **The Value is 'word' by default**
 
 #### Operations: 
 You can choose from the following operations:
@@ -93,32 +94,41 @@ For further details, you can always use the --help option to display information
 
 ## To Do (short-term)
 
-- [x] Make sure the text is stored appropriately for further cleaning.
-- [x] Tokenization of the text.
-- [x] Removal of punctuation.
-- [x] Normalization (lowercase) of the text.
-- [x] Stop Word Removal.
-- [x] Join Hyphens.
-- [x] Stemming/Lemmatization.
-- [x] Ability to select which pdf pages you want to use
-- [ ] Spell Check.
-- [ ] Text Encoding.
-- [ ] Training and test sets division.
-- [x] Make the README nicer.
-- [x] CLI flags.
-- [ ] Add unit tests.
-- [x] Choose your own level of tokenization (word or sentence)
-- [ ] Comprehensive error handling.
-- [ ] Handling of emojis
-- [x] Expand contractions
-- [ ] ...
-
+<details>
+    <summary>Completed</summary>
+    - [x] Make sure the text is stored appropriately for further cleaning.
+    - [x] Tokenization of the text.
+    - [x] Removal of punctuation.
+    - [x] Normalization (lowercase) of the text.
+    - [x] Stop Word Removal.
+    - [x] Join Hyphens.
+    - [x] Stemming/Lemmatization.
+    - [x] Ability to select which pdf pages you want to use
+    - [x] Make the README nicer.
+    - [x] CLI flags.
+    - [x] Add unit tests.
+    - [x] Choose your own level of tokenization (word or sentence)
+    - [x] Expand contractions
+</details>
+<details>
+    <summary>To-Do</summary>
+    - [ ] Load NLTK when neaded within the function not at the start of the script
+    - [ ] Spell Check.
+    - [ ] Text Encoding.
+    - [ ] Training and test sets division.
+    - [ ] Comprehensive error handling.
+    - [ ] Handling of emojis
+    - [ ] ...
+</details>
 ## To Do (long-term)
 
+- [ ] Look into a more efficient stemmer (SnowballStemmer for example)
+- [ ] Adapt for large-scale document processing by processing page by page to reduce memory usage
 - [ ] Add a GUI or a Web Interface.
 - [ ] Template a flow of cleaning steps for most common NLP models.
 - [ ] Multithreading.
 - [ ] Implement Docker.
+- [ ] Support for additional file formats
 - [ ] ...
 
 ## License
