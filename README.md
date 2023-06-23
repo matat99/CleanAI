@@ -120,6 +120,7 @@ For further details, you can always use the --help option to display information
     - [ ] Handling of emojis
     - [ ] ...
 </details>
+
 ## To Do (long-term)
 
 - [ ] Look into a more efficient stemmer (SnowballStemmer for example)
