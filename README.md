@@ -107,10 +107,10 @@ For further details, you can always use the --help option to display information
 - [x] Make the README nicer.
 - [x] CLI flags.
 - [ ] Add unit tests.
-- [ ] Choose your own level of tokenization (word or sentence)
+- [x] Choose your own level of tokenization (word or sentence)
 - [ ] Comprehensive error handling.
 - [ ] Handling of emojis
-- [ ] Expand contractions
+- [x] Expand contractions
 - [ ] ...
 
 ## To Do (long-term)

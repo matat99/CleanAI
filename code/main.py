@@ -9,6 +9,7 @@ import argparse
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
 from nltk.stem import WordNetLemmatizer
+import json
 
 
 # Checking if necessary NLTK corpora are available and if not, downloading them
@@ -18,6 +19,7 @@ for corpus in corpora:
 		nltk.data.find(f'corpora/{corpus}')
 	except LookupError:
 		nltk.download(corpus, quiet=True)
+
 
 class TextPrepare:
 	"""
@@ -66,6 +68,35 @@ class TextPrepare:
 
 		return text
 
+	def expand_contractions(self, text):
+		"""
+		Expand contractions in given text.
+		
+		Parameters:
+		text (str): Text to expand.
+
+		Returns:
+		str: Text with expanded contractions.
+		"""
+		with open('./supplementary/contractions.json', 'r') as f:
+			contraction_map = json.load(f)
+
+		contractions_pattern = re.compile('({})'.format('|'.join(contraction_map.keys())), flags=re.IGNORECASE|re.DOTALL)
+
+		def expand_match(contraction):
+			match = contraction.group(0)
+			first_char = match[0]
+			expanded_contraction = contraction_map.get(match) if contraction_map.get(match) else contraction_map.get(match.lower())
+			expanded_contraction = first_char+expanded_contraction[1:]
+			return expanded_contraction
+
+		expanded_text = contractions_pattern.sub(expand_match, text)
+		expanded_text = re.sub("'", "", expanded_text)
+
+		return expanded_text
+
+
+
 	def join_hyphens(self, text):
 		
 		pattern = r"(\w)\s*-\s*(\w)"
@@ -87,6 +118,7 @@ class TextPrepare:
 	def prepare(self):
 		text = self.text_extract()
 		text_no_hyphen = self.join_hyphens(text)
+		text_no_contractions = self.expand_contractions(text_no_hyphen)
 		return self.tokenize(text_no_hyphen)
 
 
@@ -254,7 +286,7 @@ def main(args):
 	for operation in args.operations:
 		if operation not in operations:
 			raise ValueError(f"Invalid operation: {operation}")
-	tokens = operations[operation](tokens)
+		tokens = operations[operation](tokens)
 
 
 	write_to_file(tokens, args.output)
