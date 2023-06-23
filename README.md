@@ -110,10 +110,11 @@ For further details, you can always use the --help option to display information
     - [x] Add unit tests.
     - [x] Choose your own level of tokenization (word or sentence)
     - [x] Expand contractions
+    
 </details>
 <details>
     <summary>To-Do</summary>
-    
+
     - [ ] Load NLTK when neaded within the function not at the start of the script
     - [ ] Spell Check.
     - [ ] Text Encoding.
