@@ -96,38 +96,40 @@ For further details, you can always use the --help option to display information
 
 <details>
     <summary>Completed</summary>
-
-    - [x] Make sure the text is stored appropriately for further cleaning.
-    - [x] Tokenization of the text.
-    - [x] Removal of punctuation.
-    - [x] Normalization (lowercase) of the text.
-    - [x] Stop Word Removal.
-    - [x] Join Hyphens.
-    - [x] Stemming/Lemmatization.
-    - [x] Ability to select which pdf pages you want to use
-    - [x] Make the README nicer.
-    - [x] CLI flags.
-    - [x] Add unit tests.
-    - [x] Choose your own level of tokenization (word or sentence)
-    - [x] Expand contractions
-    
+        - [x] Make sure the text is stored appropriately for further cleaning.
+        - [x] Tokenization of the text.
+        - [x] Removal of punctuation.
+        - [x] Normalization (lowercase) of the text.
+        - [x] Stop Word Removal.
+        - [x] Join Hyphens.
+        - [x] Stemming/Lemmatization.
+        - [x] Ability to select which pdf pages you want to use
+        - [x] Make the README nicer.
+        - [x] CLI flags.
+        - [x] Add unit tests.
+        - [x] Choose your own level of tokenization (word or sentence)
+        - [x] Expand contractions 
+        - [x] Load NLTK when neaded within the function not at the start of the script
 </details>
 <details>
     <summary>To-Do</summary>
-
-    - [ ] Load NLTK when neaded within the function not at the start of the script
+    - [ ] Configurable stop-words
+    - [ ] logging
     - [ ] Spell Check.
-    - [ ] Text Encoding.
+    - [ ] N-gram support
     - [ ] Training and test sets division.
     - [ ] Comprehensive error handling.
-    - [ ] Handling of emojis
+    - [ ] Adapt for large-scale document processing by processing page by page to reduce memory usage
+    - [ ] Support for additional file formats
     - [ ] ...
+
 </details>
 
 ## To Do (long-term)
 
+- [ ] Handling of emojis
+- [ ] Text Encoding.
 - [ ] Look into a more efficient stemmer (SnowballStemmer for example)
-- [ ] Adapt for large-scale document processing by processing page by page to reduce memory usage
 - [ ] Add a GUI or a Web Interface.
 - [ ] Template a flow of cleaning steps for most common NLP models.
 - [ ] Multithreading.

@@ -12,15 +12,6 @@ from nltk.stem import WordNetLemmatizer
 import json
 
 
-# Checking if necessary NLTK corpora are available and if not, downloading them
-corpora = ['stopwords', 'punkt', 'wordnet']
-for corpus in corpora:
-	try:
-		nltk.data.find(f'corpora/{corpus}')
-	except LookupError:
-		nltk.download(corpus, quiet=True)
-
-
 class TextPrepare:
 	"""
 	Class for preparing text for further processing. It extracts text from a given pdf file, conjoins any hyphenated words, expands contractions, and tokenizes it.
@@ -112,7 +103,11 @@ class TextPrepare:
 
 
 	def tokenize(self, text):
-		
+		try:
+			nltk.data.find('tokenizers/punkt')
+		except LookupError:
+			return nltk.word_tokenize(text)
+
 		if self.level == 'sentence':
 			return nltk.sent_tokenize(text)
 		else:
@@ -177,6 +172,11 @@ def no_stop_words(tokens: list) -> list:
 	Returns:
 	list: Tokens without stop words.
 	"""
+	try:
+		nltk.data.find('corpora/stopwords')
+	except LookupError:
+		return nltk.download('stopwords', quiet=True)
+
 	stop_words = set(stopwords.words('english'))
 
 	filtered_tokens = []
@@ -216,6 +216,11 @@ def lemmatize(tokens: list)-> list:
 	Returns:
 	list: Lemmatized tokens.
 	"""
+	try:
+		nltk.data.find('corpora/wordnet')
+	except LookupError:
+		nltk.download('wordnet', quiet=True)
+
 	lemmatizer = WordNetLemmatizer()
 
 	lemmatized_tokens = []
