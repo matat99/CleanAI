@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# Importing Required Libraries
+# Importing Libraries
 import re
 import pypdf
 import nltk

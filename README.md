@@ -96,6 +96,7 @@ For further details, you can always use the --help option to display information
 
 <details>
     <summary>Completed</summary>
+
         - [x] Make sure the text is stored appropriately for further cleaning.
         - [x] Tokenization of the text.
         - [x] Removal of punctuation.
@@ -113,6 +114,7 @@ For further details, you can always use the --help option to display information
 </details>
 <details>
     <summary>To-Do</summary>
+
     - [ ] Configurable stop-words
     - [ ] logging
     - [ ] Spell Check.
