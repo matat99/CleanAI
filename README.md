@@ -108,16 +108,16 @@ For further details, you can always use the --help option to display information
         - [x] Make the README nicer.
         - [x] CLI flags.
         - [x] Add unit tests.
-        - [x] Choose your own level of tokenization (word or sentence)
-        - [x] Expand contractions 
-        - [x] Load NLTK when neaded within the function not at the start of the script
-        - [x] logging
-        - [x] Configurable stop-words
+        - [x] Choose your own level of tokenization (word or sentence).
+        - [x] Expand contractions.
+        - [x] Load NLTK when neaded within the function not at the start of the script.
+        - [x] logging.
+        - [x] Configurable stop-words.
+        - [x] Spell Check.
 </details>
 <details>
     <summary>To-Do</summary>
 
-    - [ ] Spell Check.
     - [ ] N-gram support
     - [ ] Training and test sets division.
     - [ ] Comprehensive error handling.
