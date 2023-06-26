@@ -273,10 +273,10 @@ def process_pages(pages):
             page_numbers.append(int(page_range))
     return page_numbers
 
-    def spell_check(tokens: list) -> list:
-        spell = SpellChecker()
-        corrected_tokens = [spell.correction(token) if not spell.known([token]) else token for token in tokens]
-        return corrected_tokens
+def spell_check(tokens: list) -> list:
+    spell = SpellChecker()
+    corrected_tokens = [spell.correction(token) if not spell.known([token]) else token for token in tokens]
+    return corrected_tokens
 
 def main(args):
     """
@@ -294,7 +294,6 @@ def main(args):
 
 
     operations = {
-        'remove_punc': remove_punctuation,
         'rp': remove_punctuation,
         'rs': no_stop_words,
         'lemmatize': lemmatize,
@@ -302,7 +301,7 @@ def main(args):
         'stem': stem,
         'lowercase': lowercase,
         'l': lowercase,
-        'spellcheck': SpellChecker,
+        'spellcheck': spell_check,
 
     }
 
@@ -311,6 +310,8 @@ def main(args):
             raise ValueError(f"Invalid operation: {operation}")
         tokens = operations[operation](tokens, args.stop_words) if operation == 'rs' else operations[operation](tokens)
 
+    if args.spellcheck:
+        tokens = spell_check(tokens)
 
 
     write_to_file(tokens, args.output)
