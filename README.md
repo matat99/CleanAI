@@ -111,12 +111,12 @@ For further details, you can always use the --help option to display information
         - [x] Choose your own level of tokenization (word or sentence)
         - [x] Expand contractions 
         - [x] Load NLTK when neaded within the function not at the start of the script
+        - [x] logging
 </details>
 <details>
     <summary>To-Do</summary>
 
     - [ ] Configurable stop-words
-    - [ ] logging
     - [ ] Spell Check.
     - [ ] N-gram support
     - [ ] Training and test sets division.

@@ -10,7 +10,9 @@ from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
 from nltk.stem import WordNetLemmatizer
 import json
+import logging
 
+logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
 class TextPrepare:
 	"""
@@ -38,6 +40,7 @@ class TextPrepare:
 			self.pages = None
 
 	def text_extract(self, pages=None):
+		logging.info("Starting text extraction from file")
 
 		with open(self.pdf, "rb") as file:
 			# Create PDF reader object
@@ -114,6 +117,7 @@ class TextPrepare:
 			return nltk.word_tokenize(text)
 
 	def prepare(self):
+		logging.info("Preparing text for processing.")
 		text = self.text_extract()
 		text_no_hyphen = self.join_hyphens(text)
 		text_no_contractions = self.expand_contractions(text_no_hyphen)
@@ -270,6 +274,7 @@ def main(args):
 	Parameters:
 	args (Namespace): The arguments parsed from command line.
 	"""
+	logging.info("Starting main function.")
 	pages = process_pages(args.pages) if args.pages else None
 
 	text_prep = TextPrepare(args.f, pages, args.level)
@@ -298,6 +303,7 @@ def main(args):
 
 
 	write_to_file(tokens, args.output)
+	logging.info("Finished writing to output file.")
 
 
 if __name__ == "__main__":
@@ -317,7 +323,9 @@ if __name__ == "__main__":
 	if not args.f or not args.operations:
 		parser.print_usage()
 	else:
+		logging.info("Starting program.")
 		main(args)
+		logging.info("Program finished successfully.")
 
 
 
