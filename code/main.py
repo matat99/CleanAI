@@ -48,21 +48,26 @@ class TextPrepare:
             reader = pypdf.PdfReader(file)
 
             all_text = []
-            
+
             if self.pages:
                 pages_to_extract = self.pages
             else:
                 pages_to_extract = range(len(reader.pages))
 
             for i in pages_to_extract:
-                page_text = reader.pages[i].extract_text()
+                # Load page individually
+                page = reader.pages[i]
+                page_text = page.extract_text()
                 page_text = page_text.replace("\n", " ")
                 all_text.append(page_text)
+
+                # Remove reference to page and text to allow it to be garbage collected
+                del page
+                del page_text
 
             text = ' '.join(all_text)
 
             text = re.sub(r"[-_]{3,}", " ", text)
-
 
         return text
 

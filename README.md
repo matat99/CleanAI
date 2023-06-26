@@ -114,6 +114,7 @@ For further details, you can always use the --help option to display information
         - [x] logging.
         - [x] Configurable stop-words.
         - [x] Spell Check.
+        - [x] Adapt for large-scale document processing by processing page by page to reduce memory usage
 </details>
 <details>
     <summary>To-Do</summary>
@@ -121,7 +122,6 @@ For further details, you can always use the --help option to display information
     - [ ] N-gram support
     - [ ] Training and test sets division.
     - [ ] Comprehensive error handling.
-    - [ ] Adapt for large-scale document processing by processing page by page to reduce memory usage
     - [ ] Support for additional file formats
     - [ ] ...
 
