@@ -166,28 +166,28 @@ def lowercase(tokens: list) -> list:
 	return lowercase
 
 
-def no_stop_words(tokens: list) -> list:
+def no_stop_words(tokens: list, stop_words_file: str = None) -> list:
 	"""
 	Remove stop words from given tokens.
 	
 	Parameters:
 	tokens (list): List of tokens to filter stop words from.
+	stop_words_file (str, optional): Path to a file containing custom stop words. If provided, nltk stop words will be ignored.
 
 	Returns:
 	list: Tokens without stop words.
 	"""
-	try:
-		nltk.data.find('corpora/stopwords')
-	except LookupError:
-		return nltk.download('stopwords', quiet=True)
+	if stop_words_file:
+		with open(stop_words_file, 'r') as f:
+			stop_words = set(word.strip() for word in f.readlines())
+	else:
+		try:
+			nltk.data.find('corpora/stopwords')
+		except LookupError:
+			nltk.download('stopwords', quiet=True)
+		stop_words = set(stopwords.words('english'))
 
-	stop_words = set(stopwords.words('english'))
-
-	filtered_tokens = []
-
-	for word in tokens:
-		if word not in stop_words:
-			filtered_tokens.append(word)
+	filtered_tokens = [word for word in tokens if word not in stop_words]
 
 	return filtered_tokens
 
@@ -285,8 +285,6 @@ def main(args):
 	operations = {
 		'remove_punc': remove_punctuation,
 		'rp': remove_punctuation,
-		'no_stop_words': no_stop_words,
-		'remove_stop': no_stop_words,
 		'rs': no_stop_words,
 		'lemmatize': lemmatize,
 		'lemm': lemmatize,
@@ -299,7 +297,8 @@ def main(args):
 	for operation in args.operations:
 		if operation not in operations:
 			raise ValueError(f"Invalid operation: {operation}")
-		tokens = operations[operation](tokens)
+		tokens = operations[operation](tokens, args.stop_words) if operation == 'rs' else operations[operation](tokens)
+
 
 
 	write_to_file(tokens, args.output)
@@ -316,6 +315,7 @@ if __name__ == "__main__":
 	parser.add_argument('-out', '--output', type=str, default='output.txt', help='Output file name.')
 	parser.add_argument('-p', '--pages', type=str, nargs='+', help='Pages to extract. Can be single numbers or ranges (e.g. 0-3). If omitted, all pages will be processed.)')
 	parser.add_argument('-l', '--level', type=str, default='word', choices=['word', 'sentence'], help='Level of tokenization: "word" or "sentence". If omitted, word level tokenization will be applied.')
+	parser.add_argument('--stop-words', type=str , help="File path for custom stop words. If omitted, nltk stop words will be used.")
 
 
 	args = parser.parse_args()

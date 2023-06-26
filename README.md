@@ -112,11 +112,11 @@ For further details, you can always use the --help option to display information
         - [x] Expand contractions 
         - [x] Load NLTK when neaded within the function not at the start of the script
         - [x] logging
+        - [x] Configurable stop-words
 </details>
 <details>
     <summary>To-Do</summary>
 
-    - [ ] Configurable stop-words
     - [ ] Spell Check.
     - [ ] N-gram support
     - [ ] Training and test sets division.
