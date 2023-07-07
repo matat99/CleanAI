@@ -86,7 +86,7 @@ class TextPrepareBase:
         text = self.text_extract()
         text_no_hyphen = self.join_hyphens(text)
         text_no_contractions = self.expand_contractions(text_no_hyphen)
-        return self.tokenize(text_no_hyphen)
+        return self.tokenize(text_no_contractions)
 
         raise NotImplementedError 
 
@@ -101,10 +101,23 @@ class HTMLPrepare(TextPrepareBase):
     def text_extract(self):
         logging.info("Starting to extract text from file")
 
-        with open(self.path, "r") as file:
+        with open(self.path, "r", encoding="utf-8") as file:
             soup = BeautifulSoup(file, 'html.parser')
 
-        text = soup.get_text()
+        # Define the tags we want to extract text from based on verbosity
+        if self.verbosity == 1:
+            tags = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'li', 'ol', 'ul']
+        elif self.verbosity == 2:
+            tags = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'li', 'ol', 'ul', 
+                    'td', 'th', 'caption', 'blockquote']
+        else:  # verbosity == 3
+            tags = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a', 'li', 'ol', 'ul', 
+                    'td', 'th', 'caption', 'blockquote', 'div', 'span', 'pre', 'figure', 
+                    'figcaption', 'summary', 'details']
+
+        # Extract the text from the specified tags and join them together
+        text = ' '.join([t.get_text() for t in soup.find_all(tags)])
+
         return text
 
 
@@ -360,6 +373,7 @@ if __name__ == "__main__":
     parser.add_argument('-l', '--level', type=str, default='word', choices=['word', 'sentence'], help='Level of tokenization: "word" or "sentence". If omitted, word level tokenization will be applied.')
     parser.add_argument('--stop-words', type=str , help="File path for custom stop words. If omitted, nltk stop words will be used.")
     parser.add_argument('--spellcheck', action='store_true', help="Enable spell checking. WARNING: This is a computationally intesive process and might take a while. Generally there is no need for spellchecking anyway.")
+    parser.add_argument('--verbosity', type=int, default=1, choices=[1, 2, 3], help='Verbosity level for text extraction from HTML')
 
     args = parser.parse_args()
 
