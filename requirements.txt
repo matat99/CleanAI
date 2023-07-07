@@ -1,3 +1,4 @@
 pypdf>=3.11.0
 nltk>=3.8.1
 pyspellchecker>=0.7.2
+beautifulsoup4>=4.12.2

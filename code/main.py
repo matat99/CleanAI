@@ -12,64 +12,26 @@ from nltk.stem import WordNetLemmatizer
 import json
 import logging
 from spellchecker import SpellChecker
+from bs4 import BeautifulSoup
+
 
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
-class TextPrepare:
-    """
-    Class for preparing text for further processing. It extracts text from a given pdf file, conjoins any hyphenated words, expands contractions, and tokenizes it.
-    
-    Parameters:
-    pdf (str): The path of the PDF file to process.
-    pages (list, optional): List of pages or page ranges to process. For example, ["1", "3-5"] will process pages 1, 3, 4, and 5. If omitted, all pages in the PDF will be processed.
-    level (str, optional): Level of tokenization. Can be "word" or "sentence". If omitted, word level tokenization will be applied.
 
-    Methods:
-    text_extract(): Extracts all the text from a pdf file. 
-    expand_contractions(text): Expands contractions in a given text.
-    join_hyphens(text): Joins words that have been split with a hyphen.
-    tokenize(text): Tokenizes the given text at the word level.
-    prepare(): Extracts text from a pdf, conjoins any hyphenated words, expands contractions, and tokenizes it.
-    """
-    def __init__(self, pdf, pages=None, level='word'):
-        self.pdf = pdf 
+class TextPrepareBase:
+    def __init__(self, path, pages=None, level='word'):
+        self.path = path
         self.level = level
 
         if pages:
-            self.pages = process_pages(pages)  
+            self.pages = process_pages(pages)
         else:
-            self.pages = None
+            self.pages = None 
 
-    def text_extract(self, pages=None):
-        logging.info("Starting text extraction from file")
 
-        with open(self.pdf, "rb") as file:
-            # Create PDF reader object
-            reader = pypdf.PdfReader(file)
+    def text_extract(self):
+        raise NotImplementedError("Each Subclass should implement this method")
 
-            all_text = []
-
-            if self.pages:
-                pages_to_extract = self.pages
-            else:
-                pages_to_extract = range(len(reader.pages))
-
-            for i in pages_to_extract:
-                # Load page individually
-                page = reader.pages[i]
-                page_text = page.extract_text()
-                page_text = page_text.replace("\n", " ")
-                all_text.append(page_text)
-
-                # Remove reference to page and text to allow it to be garbage collected
-                del page
-                del page_text
-
-            text = ' '.join(all_text)
-
-            text = re.sub(r"[-_]{3,}", " ", text)
-
-        return text
 
     def expand_contractions(self, text):
         """
@@ -98,8 +60,6 @@ class TextPrepare:
 
         return expanded_text
 
-
-
     def join_hyphens(self, text):
         
         pattern = r"(\w)\s*-\s*(\w)"
@@ -110,17 +70,16 @@ class TextPrepare:
 
         return re.sub(pattern, replace, text)
 
-
     def tokenize(self, text):
-        try:
-            nltk.data.find('tokenizers/punkt')
-        except LookupError:
-            return nltk.word_tokenize(text)
+            try:
+                nltk.data.find('tokenizers/punkt')
+            except LookupError:
+                return nltk.word_tokenize(text)
 
-        if self.level == 'sentence':
-            return nltk.sent_tokenize(text)
-        else:
-            return nltk.word_tokenize(text)
+            if self.level == 'sentence':
+                return nltk.sent_tokenize(text)
+            else:
+                return nltk.word_tokenize(text)
 
     def prepare(self):
         logging.info("Preparing text for processing.")
@@ -128,6 +87,77 @@ class TextPrepare:
         text_no_hyphen = self.join_hyphens(text)
         text_no_contractions = self.expand_contractions(text_no_hyphen)
         return self.tokenize(text_no_hyphen)
+
+        raise NotImplementedError 
+
+
+class HTMLPrepare(TextPrepareBase):
+    """
+    Class for preparing text for further prorcessing. It extracts text from It extracts text from a given HTML file, conjoins any hyphenated words, expands contractions, and tokenizes it
+    """
+    def __init__(self, path, pages=None, level='word'):
+        super().__init__(path, pages, level)
+
+    def text_extract(self):
+        logging.info("Starting to extract text from file")
+
+        with open(self.path, "r") as file:
+            soup = BeautifulSoup(file, 'html.parser')
+
+        text = soup.get_text()
+        return text
+
+
+class PDFPrepare(TextPrepareBase):
+    """
+    Class for preparing text for further processing. It extracts text from a given pdf file, conjoins any hyphenated words, expands contractions, and tokenizes it.
+    
+    Parameters:
+    pdf (str): The path of the PDF file to process.
+    pages (list, optional): List of pages or page ranges to process. For example, ["1", "3-5"] will process pages 1, 3, 4, and 5. If omitted, all pages in the PDF will be processed.
+    level (str, optional): Level of tokenization. Can be "word" or "sentence". If omitted, word level tokenization will be applied.
+
+    Methods:
+    text_extract(): Extracts all the text from a pdf file. 
+    expand_contractions(text): Expands contractions in a given text.
+    join_hyphens(text): Joins words that have been split with a hyphen.
+    tokenize(text): Tokenizes the given text at the word level.
+    prepare(): Extracts text from a pdf, conjoins any hyphenated words, expands contractions, and tokenizes it.
+    """
+    def __init__(self, path, pages=None, level='word'):
+        super().__init__(path, pages, level)
+
+    def text_extract(self):
+        logging.info("Starting text extraction from file")
+
+
+        with open(self.path, "rb") as file:
+            # Create PDF reader object
+            reader = pypdf.PdfReader(file)
+
+            all_text = []
+
+            if self.pages:
+                pages_to_extract = self.pages
+            else:
+                pages_to_extract = range(len(reader.pages))
+
+            for i in pages_to_extract:
+                # Load page individually
+                page = reader.pages[i]
+                page_text = page.extract_text()
+                page_text = page_text.replace("\n", " ")
+                all_text.append(page_text)
+
+                # Remove reference to page and text to allow it to be garbage collected
+                del page
+                del page_text
+
+            text = ' '.join(all_text)
+
+            text = re.sub(r"[-_]{3,}", " ", text)
+
+        return text
 
 
 
@@ -288,7 +318,7 @@ def main(args):
     logging.info("Starting main function.")
     pages = process_pages(args.pages) if args.pages else None
 
-    text_prep = TextPrepare(args.f, pages, args.level)
+   
 
     tokens = text_prep.prepare()
 
@@ -331,16 +361,21 @@ if __name__ == "__main__":
     parser.add_argument('--stop-words', type=str , help="File path for custom stop words. If omitted, nltk stop words will be used.")
     parser.add_argument('--spellcheck', action='store_true', help="Enable spell checking. WARNING: This is a computationally intesive process and might take a while. Generally there is no need for spellchecking anyway.")
 
-
     args = parser.parse_args()
 
     if not args.f or not args.operations:
         parser.print_usage()
     else:
-        logging.info("Starting program.")
-        main(args)
-        logging.info("Program finished successfully.")
+        logging.info("Starting Program...")
+        filetype = args.f.split('.')[-1]
+        if filetype == 'pdf':
+            text_prep = PDFPrepare(args.f, args.pages, args.level)
+        elif filetype == 'html':
+            text_prep = HTMLPrepare(args.f, args.pages, args.level)
+        else:
+            raise ValueError(f"Unsupported file type: {filetype}")
 
+        main(args)
 
 
 
