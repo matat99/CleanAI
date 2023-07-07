@@ -19,14 +19,12 @@ logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
 
 class TextPrepareBase:
-    def __init__(self, path, pages=None, level='word'):
+    def __init__(self, path, pages=None, level='word', verbosity=1):
         self.path = path
         self.level = level
+        self.verbosity = verbosity
 
-        if pages:
-            self.pages = process_pages(pages)
-        else:
-            self.pages = None 
+        self.pages = process_pages(pages) if pages else None
 
 
     def text_extract(self):
@@ -74,7 +72,7 @@ class TextPrepareBase:
             try:
                 nltk.data.find('tokenizers/punkt')
             except LookupError:
-                return nltk.word_tokenize(text)
+                nltk.download('punkt', quiet=True)
 
             if self.level == 'sentence':
                 return nltk.sent_tokenize(text)
@@ -88,15 +86,15 @@ class TextPrepareBase:
         text_no_contractions = self.expand_contractions(text_no_hyphen)
         return self.tokenize(text_no_contractions)
 
-        raise NotImplementedError 
+        
 
 
 class HTMLPrepare(TextPrepareBase):
     """
     Class for preparing text for further prorcessing. It extracts text from It extracts text from a given HTML file, conjoins any hyphenated words, expands contractions, and tokenizes it
     """
-    def __init__(self, path, pages=None, level='word'):
-        super().__init__(path, pages, level)
+    def __init__(self, path, pages=None, level='word', verbosity=1):
+        super().__init__(path, pages, level, verbosity)
 
     def text_extract(self):
         logging.info("Starting to extract text from file")
@@ -156,15 +154,19 @@ class PDFPrepare(TextPrepareBase):
                 pages_to_extract = range(len(reader.pages))
 
             for i in pages_to_extract:
-                # Load page individually
-                page = reader.pages[i]
-                page_text = page.extract_text()
-                page_text = page_text.replace("\n", " ")
-                all_text.append(page_text)
+                try:
+                    # Load page individually
+                    page = reader.pages[i]
+                    page_text = page.extract_text()
+                    page_text = page_text.replace("\n", " ")
+                    all_text.append(page_text)
 
-                # Remove reference to page and text to allow it to be garbage collected
-                del page
-                del page_text
+                    # Remove reference to page and text to allow it to be garbage collected
+                    del page
+                    del page_text
+
+                except Exception as e:
+                    logging.error(f"Failed to extract text from the page {i}: {e}")
 
             text = ' '.join(all_text)
 
@@ -329,9 +331,7 @@ def main(args):
     args (Namespace): The arguments parsed from command line.
     """
     logging.info("Starting main function.")
-    pages = process_pages(args.pages) if args.pages else None
 
-   
 
     tokens = text_prep.prepare()
 
