@@ -115,6 +115,7 @@ For further details, you can always use the --help option to display information
         - [x] Configurable stop-words.
         - [x] Spell Check.
         - [x] Adapt for large-scale document processing by processing page by page to reduce memory usage
+        - [x] Add support for HTML files
 </details>
 <details>
     <summary>To-Do</summary>
