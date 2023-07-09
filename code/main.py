@@ -99,6 +99,9 @@ class HTMLPrepare(TextPrepareBase):
     def text_extract(self):
         logging.info("Starting to extract text from file")
 
+        if not (self.path.endswith(".html") or self.path.endswith(".htm")):
+            raise ValueError(f"File {self.path} is not an HTML or HTM file")
+
         with open(self.path, "r", encoding="utf-8") as file:
             soup = BeautifulSoup(file, 'html.parser')
 
@@ -384,7 +387,7 @@ if __name__ == "__main__":
         filetype = args.f.split('.')[-1]
         if filetype == 'pdf':
             text_prep = PDFPrepare(args.f, args.pages, args.level)
-        elif filetype == 'html':
+        elif filetype in ['html', 'htm']:
             text_prep = HTMLPrepare(args.f, args.pages, args.level)
         else:
             raise ValueError(f"Unsupported file type: {filetype}")
