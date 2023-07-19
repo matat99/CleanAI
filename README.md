@@ -97,25 +97,25 @@ For further details, you can always use the --help option to display information
 <details>
     <summary>Completed</summary>
 
-        - [x] Make sure the text is stored appropriately for further cleaning.
-        - [x] Tokenization of the text.
-        - [x] Removal of punctuation.
-        - [x] Normalization (lowercase) of the text.
-        - [x] Stop Word Removal.
-        - [x] Join Hyphens.
-        - [x] Stemming/Lemmatization.
-        - [x] Ability to select which pdf pages you want to use
-        - [x] Make the README nicer.
-        - [x] CLI flags.
-        - [x] Add unit tests.
-        - [x] Choose your own level of tokenization (word or sentence).
-        - [x] Expand contractions.
-        - [x] Load NLTK when neaded within the function not at the start of the script.
-        - [x] logging.
-        - [x] Configurable stop-words.
-        - [x] Spell Check.
-        - [x] Adapt for large-scale document processing by processing page by page to reduce memory usage
-        - [x] Add support for HTML files
+- [x] Make sure the text is stored appropriately for further cleaning.
+- [x] Tokenization of the text.
+- [x] Removal of punctuation.
+- [x] Normalization (lowercase) of the text.
+- [x] Stop Word Removal.
+- [x] Join Hyphens.
+- [x] Stemming/Lemmatization.
+- [x] Ability to select which pdf pages you want to use
+- [x] Make the README nicer.
+- [x] CLI flags.
+- [x] Add unit tests.
+- [x] Choose your own level of tokenization (word or sentence).
+- [x] Expand contractions.
+- [x] Load NLTK when neaded within the function not at the start of the script.
+- [x] logging.
+- [x] Configurable stop-words.
+- [x] Add support for HTML files
+- [x] Spell Check.
+- [x] Adapt for large-scale document processing by processing page by page to reduce memory usage
 </details>
 <details>
     <summary>To-Do</summary>
