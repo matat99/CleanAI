@@ -120,25 +120,25 @@ For further details, you can always use the --help option to display information
 <details>
     <summary>To-Do</summary>
 
-    - [ ] N-gram support
-    - [ ] Training and test sets division.
-    - [ ] Comprehensive error handling.
-    - [ ] Support for additional file formats
-    - [ ] Unit Test for every function:
-        - [ ] process pages
-        - [ ] remove punctuation
-        - [ ] lowercase
-        - [ ] no_stop_words
-        - [ ] stem
-        - [ ] lemmatize
-        - [ ] spell_check
-        - [ ] write_to_file
-        - [ ] expand contractions
-    - [ ] Expand Scope of input files 
-        - [ ] CSV
-        - [ ] txt
-        - [ ] direct input strings
-    - [ ] Text Analysis
+- [ ] N-gram support
+- [ ] Training and test sets division.
+- [ ] Comprehensive error handling.
+- [ ] Support for additional file formats
+- [ ] Unit Test for every function:
+    - [ ] process pages
+    - [ ] remove punctuation
+    - [ ] lowercase
+    - [ ] no_stop_words
+    - [ ] stem
+    - [ ] lemmatize
+    - [ ] spell_check
+    - [ ] write_to_file
+    - [ ] expand contractions
+- [ ] Expand Scope of input files 
+    - [ ] CSV
+    - [ ] txt
+    - [ ] direct input strings
+- [ ] Text Analysis
 - [ ] Enhance Spellchecking
 - [ ] Handling of numbers
     - [ ] ...
