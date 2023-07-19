@@ -124,6 +124,23 @@ For further details, you can always use the --help option to display information
     - [ ] Training and test sets division.
     - [ ] Comprehensive error handling.
     - [ ] Support for additional file formats
+    - [ ] Unit Test for every function:
+        - [ ] process pages
+        - [ ] remove punctuation
+        - [ ] lowercase
+        - [ ] no_stop_words
+        - [ ] stem
+        - [ ] lemmatize
+        - [ ] spell_check
+        - [ ] write_to_file
+        - [ ] expand contractions
+    - [ ] Expand Scope of input files 
+        - [ ] CSV
+        - [ ] txt
+        - [ ] direct input strings
+    - [ ] Text Analysis
+- [ ] Enhance Spellchecking
+- [ ] Handling of numbers
     - [ ] ...
 
 </details>
